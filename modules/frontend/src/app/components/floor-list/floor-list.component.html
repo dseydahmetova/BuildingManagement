@@ -1,0 +1,67 @@
+<div class="container">
+    <div class="building-info">
+        <h2>Building ID: {{ buildingId }}</h2>
+        <h2>Name: {{ buildingName }}</h2>
+    </div>
+
+    <form [formGroup]="floorForm" (ngSubmit)="addFloor()" class="add-floor-form">
+        <input formControlName="number" placeholder="Floor Number" required />
+        <input formControlName="description" placeholder="Description" required />
+
+        <button type="submit" pButton icon="pi pi-plus" class="p-button p-button-success">
+            Add Floor
+        </button>
+
+    </form>
+
+    <div class="floor-list">
+        <table>
+            <thead>
+                <tr>
+                    <th>Floor Number</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let floor of floors">
+                    <td>{{ floor.number }}</td>
+                    <td>{{ floor.description }}</td>
+                    <td>
+                        <div class="action-buttons">
+                            <button (click)="toggleRooms(floor.floorId!)" class="p-button">
+                                {{ showRooms[floor.floorId!] ? 'Hide Rooms' : 'Show Rooms' }}
+                            </button>
+
+                            <button type="button" pButton icon="pi pi-trash" (click)="deleteFloor(floor.floorId!)"
+                                class="p-button p-button-danger">
+                                Delete Floor
+                            </button>
+
+                            <div *ngIf="showRooms[floor.floorId!] && !rooms[floor.floorId!]">
+                                Loading rooms...
+                            </div>
+
+                            <!-- <form *ngIf="showRooms[floor.floorId!]" (ngSubmit)="updateFloor(floor.floorId!)"
+                                class="update-floor-form">
+                                <input formControlName="number" placeholder="Update Floor Number" required />
+                                <input formControlName="description" placeholder="Update Description" required />
+                                <button type="submit" class="update-button p-button" pButton label="Update Floor"
+                                    icon="pi pi-pencil"></button>
+                            </form> -->
+                        </div>
+
+                        <div *ngIf="showRooms[floor.floorId!]">
+                            <h3>Rooms</h3>
+                            <ul>
+                                <li *ngFor="let room of rooms[floor.floorId!]">
+                                    {{ room.roomDescription }}
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

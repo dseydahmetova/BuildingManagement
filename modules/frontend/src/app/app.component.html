@@ -1,0 +1,10 @@
+<!-- Header -->
+<app-header (menuToggle)="toggleMenu($event)"></app-header>
+
+<div class="wrapper" [class.menu-open]="menuValue">
+  <div class="container" [class.menu-open]="menuValue">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+
+<app-footer></app-footer>
